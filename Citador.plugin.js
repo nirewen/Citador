@@ -98,6 +98,7 @@ class Citador {
           close_button: 'prepend',
           group: 'container-1YxwTf',
           message: 'message-1PNnaP',
+          content: 'content-3dzVd8',
           markup: 'markup-2BOw-j',
           avatar: 'avatar-17mtNa .image-33JSyf',
           username: 'username-_4ZSMR',
@@ -106,7 +107,9 @@ class Citador {
           embed: 'embed-IeVjo6',
           time: 'time:not(.edited-DL9ECl)',
           edited: 'edited-DL9ECl',
-          option: 'buttonContainer-37UsAw .button-3Jq0g9'
+          option: 'buttonContainer-37UsAw .button-3Jq0g9',
+          mentionHighlight: 'isMentioned-N-h9aa',
+          mentionHighlightBar: 'isMentionedCozy-3isp7y'
         };
       
       if (target.parents(`.${classes.message}`).length > 0) {
@@ -126,6 +129,7 @@ class Citador {
                   let message = $(this).parents(`.${classes.group}`);
                   
                   self.quoteProps = $.extend(true, {}, ReactUtilities.getOwnerInstance(message[0]).props);
+                  self.handleSelection(message[0], classes);
                   
                   this.createQuote = function() {
                     var messageElem = $(message).clone().hide().appendTo(".quote-msg");
@@ -136,6 +140,17 @@ class Citador {
                     $('.quote-msg').find(`.${classes.embed}`).each(function() {
                       $(this).closest(`.${classes.accessory}`).remove();
                     });
+                    
+                    if (self.selectedMessages) {
+                      $('.quote-msg').find(`.${classes.mentionHighlight}`).removeClass(`${classes.mentionHighlight} ${classes.mentionHighlightBar}`)
+                      $('.quote-msg').find(`.${classes.markup}`).each(function(i) {
+                        if (self.selectedMessages[i]) {
+                          $(this).html(self.selectedMessages.htmls[i]);
+                        } else {
+                          $(`.quote-msg .${classes.message}`).has(this).remove();
+                        }
+                      })
+                    }
                     
                     $('.quote-msg').find(`.${classes.markup}`).each(function() {
                       let index = $(`.quote-msg .${classes.message}`).index($(`.quote-msg .${classes.message}`).has(this));
@@ -289,20 +304,8 @@ class Citador {
           atServer  = msgC.guild_id && msgC.guild_id != cc.guild_id ? ` at ${msgG.name}` : '',
           chName    = msgC.isDM() ? `@${msgC._getUsers()[0].username}` : msgC.isGroupDM() ? `${msgC.name}` : `#${msgC.name}`;
           
-      if (this.selectionP) {
-        var start = this.selectionP.start,
-          end = this.selectionP.end;
-        
-        props.messages.forEach((m, i) => {
-          text = '';
-          if(!m.deleted) {
-            var endText = m.content;
-            if(end.index == start.index) endText = m.content.substring(start.offset, end.offset);
-            else if(i == start.index) endText = m.content.substring(start.offset);
-            else if(i == end.index) endText = m.content.substring(0, end.offset);
-            if(i >= start.index && i <= end.index) text += `${endText}\n`;
-          }
-        });
+      if (this.selectedMessages) {
+        text = this.selectedMessages.join('\n');
       }
       
       let embed = {
@@ -386,20 +389,8 @@ class Citador {
           atServer  = msgC.guild_id && msgC.guild_id != cc.guild_id ? ` at ${msgG.name}` : '',
           chName    = msgC.isDM() ? `@${msgC._getUsers()[0].username}` : msgC.isGroupDM() ? `${msgC.name}` : `#${msgC.name}`;
           
-      if (this.selectionP) {
-        var start = this.selectionP.start,
-          end = this.selectionP.end;
-        
-        props.messages.forEach((m, i) => {
-          text = '';
-          if(!m.deleted) {
-            var endText = m.content;
-            if(end.index == start.index) endText = m.content.substring(start.offset, end.offset);
-            else if(i == start.index) endText = m.content.substring(start.offset);
-            else if(i == end.index) endText = m.content.substring(0, end.offset);
-            if(i >= start.index && i <= end.index) text += `${endText}\n`;
-          }
-        });
+      if (this.selectedMessages) {
+        text = this.selectedMessages.join('\n');
       }
       
       const format = 'DD-MM-YYYY HH:mm';
@@ -460,7 +451,7 @@ class Citador {
     this.quoteMsg   = null;
     this.quoteProps.messages.forEach(m => m.deleted = null);
     this.quoteProps = null;
-    this.selectionP = null;
+    this.selectedMessages = null;
   }
   
   observer(e) {
@@ -502,7 +493,111 @@ class Citador {
         }
       });
     });
-  };
+  }
+
+  getSelectedTextWithin(el) {
+    let validRange = null;
+    let sel = window.getSelection();
+    if (sel.rangeCount > 0) {
+      let range = document.createRange();
+      range.selectNodeContents(el);
+      var selRange = sel.getRangeAt(0);
+      if (selRange.compareBoundaryPoints(range.START_TO_END, range) == 1 && selRange.compareBoundaryPoints(range.END_TO_START, range) == -1) {
+        if (selRange.compareBoundaryPoints(range.START_TO_START, range) == 1) {
+          range.setStart(selRange.startContainer, selRange.startOffset);
+        }
+        if (selRange.compareBoundaryPoints(range.END_TO_END, range) == -1) {
+          range.setEnd(selRange.endContainer, selRange.endOffset);
+        }
+        validRange = range;
+      }
+    }
+    return validRange;
+  }
+
+  // Doesn't support markup and etc.
+  oldHandleSelection(messageGroup, classes) {
+    let selection = this.getSelectedTextWithin(messageGroup);
+    if (selection) {
+      let messages = [];
+      let selectionContents = $(selection.cloneContents()).contents();
+      let selectionMarkups = selectionContents.find(`.${classes.markup}`);
+      if (selectionMarkups.length > 0) {
+        selectionMarkups.each(function() {
+          messages.push($(this).text());
+        });
+      } else {
+        messages.push(selectionContents.text());
+      }
+      
+      messages = messages.map(m => m.trim())
+      if (messages && messages.length > 0 && messages.some(m => !!m)) {
+        this.selectedMessages = messages;
+      }
+    }
+  }
+
+  handleSelection(messageGroup, classes) {
+    function parseHTML (contents) {
+      let sameMessage = [];
+      contents.each(function() {
+        if (this.nodeType === 3) {
+          sameMessage.push($(this).text());
+        } else {
+          switch (this.nodeName) {
+            case 'STRONG':
+              sameMessage.push(`**${parseHTML($(this).contents())}**`);
+              break;
+            case 'U':
+              sameMessage.push(`__${parseHTML($(this).contents())}__`);
+              break;
+            case 'SPAN':
+              sameMessage.push('@MENTION');
+              break;
+            case 'PRE':
+              let code = this.className.split(/\s+/).find(c => c.startsWith('hl')) || '';
+              console.log(code)
+              sameMessage.push('```' + code.substring(2) + '\n' + $(this).text() + '```');
+              break;
+          }
+        }
+      })
+      return sameMessage.join('')
+    }
+
+    let selection = this.getSelectedTextWithin(messageGroup);
+    if (selection) {
+      let messages = [];
+      let selectionFragment = $(selection.cloneContents())
+      let selectionContents = selectionFragment.contents()
+      let selectionMarkups = selectionContents.find(`.${classes.markup}`);
+      if (selectionMarkups.length > 0) {
+        selectionMarkups.each(function() {
+          messages.push({
+            message: parseHTML($(this).contents()),
+            html: $(this).html()
+          });
+        });
+      } else {
+        messages.push({
+          message: parseHTML(selectionContents),
+          html: $('<div>').append(selectionFragment[0]).html()
+        });
+      }
+      
+      console.log(selection)
+      console.log(messages)
+      
+      messages = messages.map(m => {
+        m.message = m.message.trim()
+        return m
+      }).filter(m => !!m.message)
+      if (messages.length > 0) {
+        this.selectedMessages = messages.map(m => m.message);
+        this.selectedMessages.htmls = messages.map(m => m.html)
+      }
+    }
+  }
   
   canEmbed() {
     const channel = ReactUtilities.getOwnerInstance($(".chat")[0]);
