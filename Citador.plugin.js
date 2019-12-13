@@ -38,7 +38,7 @@ var Citador = (() => {
   
   getName         () { return "Citador";            }
   getDescription  () { return this.local.description}
-  getVersion      () { return "1.8.1";             }
+  getVersion      () { return "1.8.2";             }
   getAuthor       () { return "Nirewen";            }
   unload          () { this.deleteEverything();     }
   stop            () { this.deleteEverything();     }
@@ -284,7 +284,7 @@ var Citador = (() => {
           author    = msg.author,
           avatarURL = author.getAvatarURL(),
           color     = parseInt(msg.colorString ? msg.colorString.slice(1) : 'ffffff', 16),
-          msgCnt    = this.MessageParser.parse(cc, $('.textArea-2Spzkt').text()),
+          msgCnt    = this.MessageParser.parse(cc, $('.slateTextArea-1bp44y').text()),
           text      = messages.map(m => m.content).join('\n'),
           atServer  = msgC.guild_id && msgC.guild_id != cc.guild_id ? ` at ${msgG.name}` : '',
           chName    = msgC.isDM() ? `@${msgC.rawRecipients[0].username}` : msgC.isGroupDM() ? `${msgC.name}` : `#${msgC.name}`;
@@ -360,7 +360,7 @@ var Citador = (() => {
         }));
       });
           
-      ReactTools.getOwnerInstance($('form')[0]).setState({textValue: ''});
+      ReactTools.getOwnerInstance($('form')[0]).setState({textValue: null});
     
       this.cancelQuote();
       e.preventDefault();
@@ -381,7 +381,7 @@ var Citador = (() => {
           msgC		= props.channel,
           msgG		= guilds&&guilds[msgC.guild_id]?guilds[msgC.guild_id]:undefined,
           author	= msg.author,
-          content	= this.MessageParser.parse(cc, $('.textArea-2Spzkt').text()).content,
+          content	= this.MessageParser.parse(cc, $('.slateTextArea-1bp44y').text()).content,
           text		= messages.map(m => m.content).join('\n'),
           atServer	= msgC.guild_id && msgC.guild_id != cc.guild_id ? ` at ${msgG.name}` : '',
           chName	= msgC.isDM() ? `@${msgC.rawRecipients[0].username}` : msgC.isGroupDM() ? `${msgC.name}` : `#${msgC.name}`;
@@ -409,7 +409,7 @@ var Citador = (() => {
           
       this.MessageController.sendMessage(cc.id, { content });
           
-      ReactTools.getOwnerInstance($('form')[0]).setState({textValue: ''});
+      ReactTools.getOwnerInstance($('form')[0]).setState({textValue: null});
     
       this.cancelQuote();
       e.preventDefault();
