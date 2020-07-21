@@ -40,7 +40,7 @@ Enige vraag, stel het me op Discord: Nirewen`#9011`
 Je kunt ook lid worden van [de ondersteuningsserver](https://discord.gg/tQrdqKG) [EN]
 
 ### Nederlandse vertaling
-| [<img src="https://avatars3.githubusercontent.com/u/25463237?s=460&u=fb5bbd7843df12d071ad6368365051c9d33c1feb&v=4" width="100px;"/><br /><sub><b>Davi Patury</b></sub>](https://github.com/LeventHAN)<br />[🌍](https://github.com/nirewen/citador/commits?author=LeventHAN "Vertaling") |
+| [<img src="https://avatars3.githubusercontent.com/u/25463237?s=460&u=fb5bbd7843df12d071ad6368365051c9d33c1feb&v=4" width="100px;"/><br /><sub><b>LeventHAN</b></sub>](https://github.com/LeventHAN)<br />[🌍](https://github.com/nirewen/citador/commits?author=LeventHAN "Vertaling") |
 
 ### Bekende bugs
 - [ ] Wereldwijde emotes/server-emotes worden mogelijk niet weergegeven

@@ -40,7 +40,7 @@ Herhangi bir sorusu olan bana Discord üzerinden ulaşabilir: Nirewen`#9011`
 Ayrıca [destek sunucusuna](https://discord.gg/tQrdqKG) da katılabilirsiniz [EN]
 
 ### Türkçe çeviri
-| [<img src="https://avatars3.githubusercontent.com/u/25463237?s=460&u=fb5bbd7843df12d071ad6368365051c9d33c1feb&v=4" width="100px;"/><br /><sub><b>Davi Patury</b></sub>](https://github.com/LeventHAN)<br />[🌍](https://github.com/nirewen/citador/commits?author=LeventHAN "Çeviri") |
+| [<img src="https://avatars3.githubusercontent.com/u/25463237?s=460&u=fb5bbd7843df12d071ad6368365051c9d33c1feb&v=4" width="100px;"/><br /><sub><b>LeventHAN</b></sub>](https://github.com/LeventHAN)<br />[🌍](https://github.com/nirewen/citador/commits?author=LeventHAN "Çeviri") |
 
 ### Bilinen hatalar
 - [ ] Global ifadeler/Sunucu ifadeleri gösterilmeyebilir
