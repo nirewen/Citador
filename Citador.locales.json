@@ -277,5 +277,67 @@
 			},
 			"reset": "Obnovit nastavení"
 		}
+	},
+	"tr": {
+		"description": "Sohbette birini alıntılar",
+		"startMsg": "Başlatıldı",
+		"quoteTooltip": "Alıntı",
+		"deleteTooltip": "Sil",
+		"noPermTooltip": "Alıntı yapma izni yok",
+		"noChatTooltip": "Mesaj gönderme izni yok",
+		"attachment": "Ek",
+		"warning": {
+			"title": "Yerleştirme Uyarısı",
+			"description": "Gömülü alıntı kullanarak Discord'dan kırmızı bayrakla işaretlenmeye ve gömme izinlerinin global olarak kaldırılmasına açık olursunuz. Dikkatli kullanın.",
+			"yes": "Gömme Kullan",
+			"no": "Kod blokları'ile devam et"
+		},
+		"settings": {
+			"mentionUser": {
+				"title": "Alıntılanan kullanıcıdan bahsedin",
+				"description": "Alıntılanan kullanıcıdan bahsedilip edilmeyeceği kararı. Sözlerini mesajınıza eklemek için avatarlarını da tıklayabilirsiniz."
+			},
+			"useFallbackCodeblock": {
+				"title": "Kod bloğu alıntı biçimini kullan",
+				"choices": ["Asla", "Her zaman", "Sadece izinsiz olduğunda"]
+			},
+			"disableServers": {
+				"title": "Belirli sunucular için gömme alıntılarını devre dışı bırak",
+				"description": "Gömülü alıntıyı devre dışı bırakmak için bir sunucuyu tıklayın. Etkinleştirmek için tekrar tıklayın.</br>Ayrıca bir sunucuya sağ tıklayıp geçiş yapabilirsiniz.",
+				"context": "Gömülü alıntı"
+			},
+			"reset": "Ayarları Sıfırla"
+		}
+	},
+	"nl": {
+		"description": "Citeert iemand in de chat",
+		"startMsg": "Begonnen",
+		"quoteTooltip": "Citaat",
+		"deleteTooltip": "Verwijderen",
+		"noPermTooltip": "Geen toestemming om te citeren",
+		"noChatTooltip": "Geen toestemming om berichten te verzenden",
+		"attachment": "Bijlage",
+		"warning": {
+			"title": "Waarschuwing embed",
+			"description": "Door ingesloten citaat te gebruiken, bent u vatbaar voor rode vlag van Discord en worden insluitingsrechten wereldwijd verwijderd. Gebruik voorzichtig.",
+			"yes": "Gebruik insluitingen",
+			"no": "Blijf bij codeblocks"
+		},
+		"settings": {
+			"mentionUser": {
+				"title": "Noem de geciteerde gebruiker",
+				"description": "Of de geciteerde gebruiker moet worden vermeld of niet. U kunt ook op hun avatar klikken om hun vermelding aan uw bericht toe te voegen."
+			},
+			"useFallbackCodeblock": {
+				"title": "Gebruik het codeblokcitaatformaat",
+				"choices": ["Nooit", "Altijd", "Alleen wanneer zonder toestemming"]
+			},
+			"disableServers": {
+				"title": "Schakel embed quotes uit voor specifieke servers",
+				"description": "Klik op een server om de aanhalingstekens daarvoor uit te schakelen. Klik nogmaals om in te schakelen</br>Je kunt ook met de rechtermuisknop op een server klikken en wisselen.",
+				"context": "Ingesloten citaten"
+			},
+			"reset": "Reset instellingen"
+		}
 	}
 }
